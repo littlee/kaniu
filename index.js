@@ -44,12 +44,17 @@ $(function() {
   })
 
   $('body').on('click', '.p8-take', function() {
-    window.location = 'https://credit.cardniu.com/creditcard/?channel=weixin&source=3&p_nav=20171226'
+    window.location =
+      'https://credit.cardniu.com/creditcard/?channel=weixin&source=3&p_nav=20171226'
   })
 
-  // $.post('http://php.uclee.com/api/getJsSdkInfo', {
-  //   url: window.location.href
-  // }, function(data) {
-
-  // }, 'json')
+  $.ajax({
+    url: 'http://php.uclee.com/api/getJsSdkInfo',
+    type: 'POST',
+    data: {
+      url: window.location.href
+    },
+    contentType: 'application/json; charset=utf-8',
+    success: function() {}
+  })
 })
