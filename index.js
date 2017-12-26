@@ -51,10 +51,46 @@ $(function() {
   $.ajax({
     url: 'http://php.uclee.com/api/getJsSdkInfo',
     type: 'POST',
-    data: {
+    data: JSON.stringify({
       url: window.location.href
-    },
+    }),
     contentType: 'application/json; charset=utf-8',
-    success: function() {}
+    dataType: 'json',
+    success: function(data) {
+      wx.config({
+        appId: data.appid,
+        timestamp: data.timestamp,
+        nonceStr: data.noncestr,
+        signature: data.signature,
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+      })
+
+      wx.ready(function() {
+        wx.onMenuShareTimeline({
+          title: '2017信用卡的那些事',
+          link: window.location.href,
+          imgUrl: window.location.origin + '/share.png',
+          success: function() {
+            // 用户确认分享后执行的回调函数
+          },
+          cancel: function() {
+            // 用户取消分享后执行的回调函数
+          }
+        })
+
+        wx.onMenuShareAppMessage({
+          title: '2017信用卡的那些事',
+          desc: '这可能是信用卡圈最“神”的总结',
+          link: window.location.href,
+          imgUrl: window.location.origin + '/share.png',
+          success: function() {
+            // 用户确认分享后执行的回调函数
+          },
+          cancel: function() {
+            // 用户取消分享后执行的回调函数
+          }
+        })
+      })
+    }
   })
 })
